@@ -1,0 +1,16 @@
+#lang racket
+(provide losange-iter)
+(provide losange-rec)
+; ***************** IFT359 / TP1 Groupe 1 ou 2
+; ***************** Nom, prénom et matricule du premier membre de l’équipe
+; ***************** Nom, prénom et matricule du deuxième membre de l’équipe\
+
+(define (losange-iter)
+
+  0
+)
+
+(define (losange-rec)
+
+  0
+)

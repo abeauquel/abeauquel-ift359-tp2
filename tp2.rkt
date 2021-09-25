@@ -11,7 +11,7 @@
 )
 
 (define (losange-rec l)
-  (if (or (not (number? l)) (zero? l) (negative? l))
+  (if (or (not (number? l)) (zero? l) (negative? l) (> l 40))
    (displayln "Données invalides")
    (if (eq? l 1)
        (displayln "x")

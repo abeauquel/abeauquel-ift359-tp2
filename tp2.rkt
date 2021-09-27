@@ -6,21 +6,33 @@
 ; ***************** Beauquel, Alexandre 19 034 135
 
 (define (losange-iter l)
-  (define (losange-iter-private ligne colonne maxLigne resteX nbX resteChar nbChar)
+  (define (losange-iter-private ligne colonne maxLigne resteX nbX resteChar nbChar resultat)
     (if (eq? ligne maxLigne)
-        (afficher-dernierX )
+        (display (string-append resultat "                                       x\n"))
         (if(> resteChar (/ nbChar 2))
-           (and (display " ") (losange-rec-private ligne (+ colonne 1) maxLigne resteX nbX (- resteChar 1) nbChar))
+           (losange-iter-private ligne
+                                (+ colonne 1)
+                                maxLigne
+                                resteX
+                                nbX
+                                (- resteChar 1)
+                                nbChar
+                                (string-append resultat " "))
 
            (if(> resteX 0)
-              (and (display "x") (losange-rec-private ligne (+ colonne 1) maxLigne (- resteX 1) nbX resteChar nbChar))
-              (and (newline) (losange-rec-private
-                              (+ ligne 1) 0 maxLigne
-                              (recuperer-nombre-x (+ ligne 1) maxLigne nbX)
-                              (recuperer-nombre-x (+ ligne 1) maxLigne nbX)
-                              (recuperer-reste-character (recuperer-nombre-x (+ ligne 1) maxLigne nbX))
-                              (recuperer-reste-character (recuperer-nombre-x (+ ligne 1) maxLigne nbX))
-                              ))
+              (losange-iter-private ligne
+                                   (+ colonne 1)
+                                   maxLigne
+                                   (- resteX 1)
+                                   nbX resteChar nbChar (string-append resultat "x"))
+              (losange-iter-private
+               (+ ligne 1) 0 maxLigne
+               (recuperer-nombre-x (+ ligne 1) maxLigne nbX)
+               (recuperer-nombre-x (+ ligne 1) maxLigne nbX)
+               (recuperer-reste-character (recuperer-nombre-x (+ ligne 1) maxLigne nbX))
+               (recuperer-reste-character (recuperer-nombre-x (+ ligne 1) maxLigne nbX))
+               (string-append resultat "\n")
+               )
               )
            )
        )
@@ -30,7 +42,7 @@
    (displayln "Données invalides")
    (if (eq? l 1)
        (afficher-dernierX )
-       (losange-iter-private 1 0 (-(* l 2 )1) 1 1 78 78)
+       (losange-iter-private 1 0 (-(* l 2 )1) 1 1 78 78 "")
        )
    )
 

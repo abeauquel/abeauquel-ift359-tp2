@@ -5,6 +5,7 @@
 ; ***************** IFT359 / TP2 Groupe 1
 ; ***************** Beauquel, Alexandre 19 034 135
 
+;Fonction iterative pour le losange
 (define (losange-iter l)
   (define (losange-iter-private ligne colonne maxLigne resteX nbX resteChar nbChar resultat)
     (if (eq? ligne maxLigne)
@@ -37,25 +38,25 @@
            )
        )
     )
-  
-  (if (or (not (number? l)) (zero? l) (negative? l) (> l 40))
-   (displayln "Données invalides")
-   (if (eq? l 1)
-       (afficher-dernierX )
-       (losange-iter-private 1 0 (-(* l 2 )1) 1 1 78 78 "")
-       )
+
+  ;Vérification des entrées
+    (cond
+   [(or (not (number? l)) (negative? l)) (displayln "Données invalides")]
+   [(or (eq? l 1) (eq? l 0)) (afficher-dernierX )]
+   [(> l 40) (displayln "Losange trop grand")]
+   [else (losange-iter-private 1 0 (-(* l 2 )1) 1 1 78 78 "")]
    )
 
 )
 
 ;Vérification des entrées et appel de la fonction recursif
 (define (losange-rec l)
-  (if (or (not (number? l)) (zero? l) (negative? l) (> l 40))
-   (displayln "Données invalides")
-   (if (eq? l 1)
-       (afficher-dernierX )
-       (losange-rec-private 1 0 (-(* l 2 )1) 1 1 78 78)
-       )
+
+  (cond
+   [(or (not (number? l)) (negative? l)) (displayln "Données invalides")]
+   [(or (eq? l 1) (eq? l 0)) (afficher-dernierX )]
+   [(> l 40) (displayln "Losange trop grand")]
+   [else (losange-rec-private 1 0 (-(* l 2 )1) 1 1 78 78)]
    )
 )
 
@@ -80,23 +81,24 @@
      )
    )
 
+;recuperer le nombre de x à afficher en fonction de la ligne,
+;du max de ligne dans le losange et du nombre precedent de x
 (define (recuperer-nombre-x ligne max nbX)
   (if(> ligne (+(/ max 2)1))
      (- nbX 2)
      (-(* ligne 2 ) 1)
   )
 )
+;recuperer le nombre de character qu'il reste à afficher 
 (define (recuperer-reste-character resteX)
   (- 78 resteX)
 )
 
+; afficher la derniere ligne du losange
 (define (afficher-dernierX )
        (displayln "                                       x");fin
 )
 
-(losange-rec 1)
-(displayln "---------------")
-(losange-rec 4)
-(displayln "---------------")
-(losange-iter 4)
-(displayln "---------------")
+
+;(losange-rec 1)
+;(losange-iter 345)

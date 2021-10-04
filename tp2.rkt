@@ -4,12 +4,14 @@
 
 ; ***************** IFT359 / TP2 Groupe 1
 ; ***************** Beauquel, Alexandre 19 034 135
+; ***************** Poulin, Sebastien 19 093 892
+
 
 ;Fonction iterative pour le losange
 (define (losange-iter l)
-  (define (losange-iter-private ligne colonne maxLigne resteX nbX resteChar nbChar resultat)
+  (define (losange-iter-private ligne colonne maxLigne resteX nbX resteChar nbChar resultat) ;Definition de la fonction de recursion interne
     (if (eq? ligne maxLigne)
-        (display (string-append resultat "                                       x\n"))
+        (display "                                       x\n")
         (if(> resteChar (/ nbChar 2))
            (losange-iter-private ligne
                                 (+ colonne 1)
@@ -18,21 +20,21 @@
                                 nbX
                                 (- resteChar 1)
                                 nbChar
-                                (string-append resultat " "))
+                                (display " "))
 
            (if(> resteX 0)
               (losange-iter-private ligne
                                    (+ colonne 1)
                                    maxLigne
                                    (- resteX 1)
-                                   nbX resteChar nbChar (string-append resultat "x"))
+                                   nbX resteChar nbChar (display "x"))
               (losange-iter-private
                (+ ligne 1) 0 maxLigne
                (recuperer-nombre-x (+ ligne 1) maxLigne nbX)
                (recuperer-nombre-x (+ ligne 1) maxLigne nbX)
                (recuperer-reste-character (recuperer-nombre-x (+ ligne 1) maxLigne nbX))
                (recuperer-reste-character (recuperer-nombre-x (+ ligne 1) maxLigne nbX))
-               (string-append resultat "\n")
+               (display "\n")
                )
               )
            )
@@ -41,10 +43,11 @@
 
   ;Vérification des entrées
     (cond
-   [(or (not (number? l)) (negative? l)) (displayln "Données invalides")]
-   [(or (eq? l 1) (eq? l 0)) (afficher-dernierX )]
-   [(> l 40) (displayln "Losange trop grand")]
-   [else (losange-iter-private 1 0 (-(* l 2 )1) 1 1 78 78 "")]
+   [(or (not (number? l)) (not (integer? l)) (negative? l)) (displayln "Données invalides")] ; Si la long. n'est pas un nombre, negatif ou decimal
+   [(eq? l 1) (afficher-dernierX )]
+   [(eq? l 0) (display "\n")]
+   [(> l 39) (displayln "Losange trop grand")]
+   [else (losange-iter-private 1 0 (-(* l 2 )1) 1 1 78 78 "")] ;Appel initial
    )
 
 )
@@ -53,9 +56,10 @@
 (define (losange-rec l)
 
   (cond
-   [(or (not (number? l)) (negative? l)) (displayln "Données invalides")]
-   [(or (eq? l 1) (eq? l 0)) (afficher-dernierX )]
-   [(> l 40) (displayln "Losange trop grand")]
+   [(or (not (number? l)) (not (integer? l)) (negative? l)) (displayln "Données invalides")]
+   [(eq? l 1) (afficher-dernierX )]
+   [(eq? l 0) (display "\n")]
+   [(> l 39) (displayln "Losange trop grand")]
    [else (losange-rec-private 1 0 (-(* l 2 )1) 1 1 78 78)]
    )
 )
@@ -101,4 +105,4 @@
 
 
 ;(losange-rec 1)
-;(losange-iter 345)
+;(losange-iter 15)
